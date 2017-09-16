@@ -5,7 +5,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: backend/config/containers/web/Dockerfile
+      dockerfile: /backend/config/containers/web/Dockerfile
     volumes:
       - .:/backend/web
     ports:
