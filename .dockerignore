@@ -1,0 +1,5 @@
+.git*
+log/*
+tmp/*
+backend/config/containers/web/Dockerfile
+README.rdoc
