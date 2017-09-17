@@ -4,10 +4,10 @@ services:
     image: mysql
   web:
     build:
-      context: .
-      dockerfile: /backend/config/containers/web/Dockerfile
+      context: ./backend
+      dockerfile: /config/containers/web/Dockerfile
     volumes:
-      - .:/backend/web
+      - ./backend:/web
     ports:
       - "80:80"
     depends_on:
