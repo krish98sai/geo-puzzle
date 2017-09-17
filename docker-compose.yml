@@ -2,13 +2,16 @@ version: '3'
 services:
   db:
     image: mysql
+    env_file: .env
   web:
     build:
-      context: .
-      dockerfile: backend/config/containers/web/Dockerfile
+      context: ./backend
+      dockerfile: /config/containers/web/Dockerfile
+    command: rails s -p 80 -b 'web'
     volumes:
-      - .:/backend/web
+      - ./backend:/web
     ports:
       - "80:80"
     depends_on:
       - db
+    env_file: .env
