@@ -15,3 +15,16 @@ services:
     depends_on:
       - db
     env_file: .env
+  react:
+    build:
+      context: .
+      dockerfile: react-dockerfile
+    volumes:
+      - ./frontend:/frontend
+  android:
+    build:
+      context: ./frontend
+      dockerfile: android-dockerfile
+    command: react-native run-android
+    volumes:
+      - ./frontend:/frontend

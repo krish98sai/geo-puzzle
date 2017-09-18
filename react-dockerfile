@@ -1,0 +1,6 @@
+FROM node:8.5
+RUN npm install -g react-native-cli
+
+RUN mkdir /frontend
+
+ADD ./frontend /frontend

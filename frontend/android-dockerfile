@@ -1,0 +1,11 @@
+FROM node:8.5
+RUN npm install -g react-native-cli
+ADD . android_license.sh
+
+RUN apt-get update
+RUN ["android_license.sh", "apt-get install openjdk-7-jdk"]
+
+RUN mkdir /frontend
+WORKDIR /frontend
+
+ADD . .
