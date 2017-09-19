@@ -13,6 +13,8 @@ ENV PATH $PATH:node_modules/.bin
 RUN apt-get update -q && \
 	apt-get install -qy --no-install-recommends python-dev default-jdk
 
+RUN apt-get -y install sudo
+
 ##
 ## Install Android SDK
 ##
@@ -63,6 +65,12 @@ RUN git clone https://github.com/facebook/watchman.git
 RUN cd watchman && git checkout v4.7.0 && ./autogen.sh && ./configure && make && make install
 RUN rm -rf watchman
 
+#android-udev-rules
+RUN git clone https://github.com/M0Rf30/android-udev-rules.git
+RUN cp android-udev-rules/51-android.rules /etc/udev/rules.d/ && \
+		chmod a+r /etc/udev/rules.d/51-android.rules && \
+		groupadd adbusers
+
 # Default react-native web server port
 EXPOSE 8081
 
@@ -75,6 +83,7 @@ RUN adduser --disabled-password --gecos '' $USERNAME && \
     #adduser $USERNAME kvm && \
     #adduser $USERNAME libvirt
 
+
 # Create android avd image
 # RUN echo "no" | android create avd -n android-23-phone -c 1000M -s WVGA854 -t 1
 
@@ -86,4 +95,4 @@ USER $USERNAME
 
 # Set workdir
 # You'll need to run this image with a volume mapped to /home/dev (i.e. -v $(pwd):/home/dev) or override this value
-WORKDIR /home/$USERNAME/app/react
+WORKDIR /home/$USERNAME/app/

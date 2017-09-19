@@ -20,14 +20,13 @@ services:
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
-    command: react-native start
+    command: bash -c "react-native start"
     volumes:
-      - /home/$USER/.android:/home/dev/.android
+      - C:/Users/krish98sai/.android:/home/dev/.android
       - /dev/bus/usb:/dev/bus/usb
-      - ./frontend:/home/dev/app/react/
-      - /Users/krish98sai/.android:/home/dev/.android
+      - ./frontend:/home/dev/app/
       - /tmp/.X11-unix:/tmp/.X11-unix
     network_mode: "host"
     ports:
-      - "8081:8081"
+      - "8081"
     env_file: .env
