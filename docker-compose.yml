@@ -15,3 +15,18 @@ services:
     depends_on:
       - db
     env_file: .env
+  react:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: react-native start
+    privileged: true
+    volumes:
+      - C:/Users/krish98sai/.android:/home/dev/.android
+      - /dev/bus/usb:/dev/bus/usb
+      - ./frontend:/home/dev/app/
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    network_mode: "host"
+    ports:
+      - "8081"
+    env_file: .env
