@@ -17,7 +17,7 @@ export default class app extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React
+          Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js

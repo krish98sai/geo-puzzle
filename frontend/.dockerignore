@@ -1,0 +1,3 @@
+android/app/build/tmp
+android/gradle_deps/caches
+android/gradle_deps/wrapper

@@ -50,6 +50,8 @@ RUN apt-get install expect -y --force-yes
 COPY tools /opt/tools
 RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,android-23,build-tools-23.0.1,extra-android-support,extra-android-m2repository,sys-img-x86_64-android-23,extra-google-m2repository"]
 
+RUN ln -s /usr/local/android-sdk-linux/platform-tools/adb /usr/local/sbin/adb
+
 # Get yarn
 RUN npm install -g yarn
 
@@ -57,13 +59,13 @@ RUN npm install -g yarn
 RUN npm install -g react-native-cli
 
 # Get watchman
-RUN git clone https://github.com/facebook/watchman.git && \
-  cd watchman && \
-  git checkout v4.7.0 && \
-  ./autogen.sh && \
-  ./configure && \
-  make && \
-  sudo make install
+#RUN git clone https://github.com/facebook/watchman.git && \
+#  cd watchman && \
+#  git checkout v4.7.0 && \
+#  ./autogen.sh && \
+#  ./configure && \
+#  make && \
+#  sudo make install
 
 # Clean up when done.
 RUN apt-get clean && \

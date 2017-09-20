@@ -19,7 +19,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    command: react-native start
+    command: bash -c "sudo adb reverse tcp:8081 tcp:8081 && react-native start"
     privileged: true
     volumes:
       - C:/Users/krish98sai/.android:/home/dev/.android
