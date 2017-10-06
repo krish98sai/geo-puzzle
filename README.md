@@ -10,8 +10,8 @@ Install Docker or Docker Toolbox (Device Specific)
 
 3. **Create** a `.env` file (or move .env.dev to .env)
 ```text
-MYSQL_ROOT_PASSWORD=root
 RAILS_ENV=development
+WEB_DATABASE_PASSWORD=password
 ```
 
 4. **Build** the `web`, and `db` containers:
