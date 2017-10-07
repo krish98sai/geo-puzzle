@@ -9,7 +9,6 @@ class Users::SessionsController < Devise::SessionsController
     #Checks to see if request is coming from JSON
     if request.headers["ACCEPT"] == "application/json"
       self.resource = warden.authenticate!(auth_options)
-      set_flash_message(:notice, :signed_in) if is_flashing_format?
       sign_in(resource_name, resource)
       yield resource if block_given?
 

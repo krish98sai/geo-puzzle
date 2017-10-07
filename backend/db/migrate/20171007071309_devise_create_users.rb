@@ -6,7 +6,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :encrypted_password, null: false, default: ""
 
       ## Rememberable
-      t.datetime :remember_created_at
+      #t.datetime :remember_created_at
 
       ## Confirmable
       # t.string   :confirmation_token
