@@ -7,7 +7,7 @@ class PuzzleController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     respond_to do |format|
       format.html
-      format.json { render json: @article }
+      format.json { render json: @puzzle }
     end
   end
 end

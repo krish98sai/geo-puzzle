@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'post/index'
+
+  get 'post/show'
+
   get 'puzzle/index'
 
   get 'puzzle/show'
