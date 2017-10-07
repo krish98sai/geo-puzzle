@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'puzzle/new'
+
+  get 'puzzle/create'
+
   get 'home/index'
 
   root 'home#index'
