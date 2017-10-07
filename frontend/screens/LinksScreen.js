@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   Keyboard,
   Image,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 export default class LinksScreen extends React.Component {
   constructor(props) {
@@ -95,7 +96,7 @@ export default class LinksScreen extends React.Component {
             ref={(input) => this.CpasswordInput = input}
             onChangeText={(confirm_password) => {this.setState({confirm_password})}}
           />
-          <TouchableOpacity style={styles.button} onPress={() => {
+          <TouchableOpacity style={styles.button} onPress= {async() => {
             var json_str = JSON.stringify({
               user: {
                 email: this.state.email,
@@ -103,17 +104,24 @@ export default class LinksScreen extends React.Component {
                 password_confirmation: this.state.confirm_password
               }
             })
+            try{
+              const value = await AsyncStorage.getItem('auth_token');
+              if(value != null){
+                Alert.alert(value);
+              }
+            }catch(error){
 
-            Alert.alert(json_str);
+            }
+            //Alert.alert(json_str);
 
-            fetch('https://geo-puzzle.herokuapp.com/users', {
+            /*fetch('https://geo-puzzle.herokuapp.com/users', {
                     method: 'POST',
                     headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
                     },
                     body: json_str
-                  })
+                  })*/
           }}>
             <Text>
             CreateAccount
