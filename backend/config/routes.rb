@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get 'puzzle/new'
+  get 'puzzle/index'
 
-  get 'puzzle/create'
+  get 'puzzle/show'
 
   devise_for :users, controllers: {
       sessions: 'users/sessions',
