@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions } from 'expo';
+import CreatePuzzleScreen from './CreatePuzzle'
 class HomeScreen extends React.Component {
   constructor(props){
     super(props);
@@ -105,8 +106,10 @@ class HomeScreen extends React.Component {
               }catch(error){
 
               }
+
             })
-          }}>
+            navigate('CreatePuz');}
+          }>
             <Text>
             LOGIN
             </Text>
@@ -160,6 +163,7 @@ class CreateAccount extends React.Component {
 export default myapp = StackNavigator({
   Home: { screen: HomeScreen },
   CreateAcct: { screen: CreateAccount },
+  CreatePuz: { screen: CreatePuzzleScreen},
 });
 
 
