@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'post/index'
+  get 'post/show'
+  post 'post/create'
+  get 'puzzle/index'
+  get 'puzzle/show'
+  post 'puzzle/create'
+
   devise_for :users, controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations'
