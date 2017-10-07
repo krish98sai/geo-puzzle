@@ -12,9 +12,20 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Keyboard,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 export default class LinksScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      confirm_password: ''
+    }
+  }
+
   static navigationOptions = {
     title: 'CreateAccount',
     header: null
@@ -36,9 +47,6 @@ export default class LinksScreen extends React.Component {
           title="CreateAccount"
         />
       </View>*/
-
-
-
       <View style={styles.container}>
         <View style={styles.logoBox}>
           <Image
@@ -55,6 +63,7 @@ export default class LinksScreen extends React.Component {
             keyboardType= "default"
             underlineColorAndroid='transparent'
             onSubmitEditing={() => this.emailInput.focus()}
+            onChangeText={(name) => {this.setState({name})}}
           />
 
           <TextInput style={styles.input}
@@ -65,6 +74,7 @@ export default class LinksScreen extends React.Component {
             underlineColorAndroid='transparent'
             onSubmitEditing={() => this.passwordInput.focus()}
             ref={(input) => this.emailInput = input}
+            onChangeText={(email) => {this.setState({email})}}
           />
 
           <TextInput style={styles.input}
@@ -74,7 +84,7 @@ export default class LinksScreen extends React.Component {
             underlineColorAndroid='transparent'
             onSubmitEditing={() => this.CpasswordInput.focus()}
             ref={(input) => this.passwordInput = input}
-
+            onChangeText={(password) => {this.setState({password})}}
           />
           <TextInput style={styles.input}
             placeholder= "Confirm password"
@@ -83,9 +93,28 @@ export default class LinksScreen extends React.Component {
             placeholderTextColor= "rgba(0,0,0,0.7)"
             returnKeyType ="go"
             ref={(input) => this.CpasswordInput = input}
-
+            onChangeText={(confirm_password) => {this.setState({confirm_password})}}
           />
-          <TouchableOpacity style={styles.button} onPress={() => navigate('CreateAcct')}>
+          <TouchableOpacity style={styles.button} onPress={() => {
+            var json_str = JSON.stringify({
+              user: {
+                email: this.state.email,
+                password: this.state.password,
+                password_confirmation: this.state.confirm_password
+              }
+            })
+
+            Alert.alert(json_str);
+
+            fetch('https://geo-puzzle.herokuapp.com/users', {
+                    method: 'POST',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                    },
+                    body: json_str
+                  })
+          }}>
             <Text>
             CreateAccount
             </Text>
