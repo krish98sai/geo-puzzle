@@ -10,15 +10,20 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Keyboard,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-
+import { Camera, Permissions } from 'expo';
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Loggin',
     header: null
   };
+  state = {
+    password: "",
+    username: ""
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -53,6 +58,7 @@ class HomeScreen extends React.Component {
             underlineColorAndroid='transparent'
             keyboardType= "email-address"
             onSubmitEditing={() => this.passwordInput.focus()}
+            ref={(input) => {this.state.username = input}}
           />
 
           <TextInput style={styles.input}
@@ -61,10 +67,12 @@ class HomeScreen extends React.Component {
             placeholderTextColor= "rgba(0,0,0,0.7)"
             returnKeyType ="go"
             underlineColorAndroid='transparent'
-            ref={(input) => this.passwordInput = input}
+            ref={(input) => {this.state.password = input}}
 
           />
-          <TouchableOpacity style={styles.button} onPress={() => navigate('CreateAcct')}>
+          <TouchableOpacity style={styles.button} onPress={() => {
+              console.err(this.state.password);
+          }}>
             <Text>
             LOGIN
             </Text>
@@ -84,27 +92,34 @@ class CreateAccount extends React.Component {
     title: 'CreateAccount',
     header: null
   };
+  state = {
+    hasCameraPermission: null,
+    type: Camera.Constants.Type.back,
+  };
+
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
+  }
+
   render() {
+    const { hasCameraPermission } = this.state;
+    if (hasCameraPermission === null) {
+      return <View style={{ flex: 1,
+         backgroundColor:"#FFF"
 
-    const { navigate } = this.props.navigation;
-    return (
+      }}/>;
+    } else if (hasCameraPermission === false) {
+      return <Text>No access to camera</Text>;
+    } else {
+      return (
+        <View style={{ flex: 1 }}>
+          <Camera style={{ flex: 1 }} ratio="16:9" type={this.state.type}>
 
-
-      <View>
-        <Text>CreateAccount</Text>
-        <Button
-          onPress={() => navigate('Home')}
-          title="Loggin"
-        />
-      </View>
-
-
-
-
-
-
-
-    );
+          </Camera>
+        </View>
+      );
+    }
   }
 }
 
