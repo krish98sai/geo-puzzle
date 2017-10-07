@@ -6,7 +6,7 @@ services:
   web:
     build:
       context: ./backend
-      dockerfile: /config/containers/web/Dockerfile
+      dockerfile: /Dockerfile
     command: rails s -p 80 -b 'web'
     volumes:
       - ./backend:/web
