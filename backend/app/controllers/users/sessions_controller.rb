@@ -6,7 +6,6 @@ class Users::SessionsController < Devise::SessionsController
 
   #Adapted to support login and auth_token distribution over JSON
   def create
-    params[:user].merge!(remember_me: 1)
     #Checks to see if request is coming from JSON
     if request.headers["ACCEPT"] == "application/json"
       self.resource = warden.authenticate!(auth_options)
