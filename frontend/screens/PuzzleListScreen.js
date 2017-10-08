@@ -17,7 +17,8 @@ import {
   ListView
 } from 'react-native';
 import CreatePuzzleScreen from './CreatePuzzleScreen';
-import CreatePostScreen from './CreatePostScreen'
+import CreatePostScreen from './CreatePostScreen';
+import ViewPuzzleScreen from './ViewPuzzleScreen';
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions, Location } from 'expo';
 class PuzzleListScreen extends React.Component {
@@ -74,8 +75,17 @@ class PuzzleListScreen extends React.Component {
 
 
   renderRow(puzzle, sectionId, rowId, highlightRow){
+    const { navigate } = this.props.navigation;
     return(
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={async()=>{
+        try{
+            await AsyncStorage.setItem('id', puzzle.id + '');
+            console.log("Any string");
+        }catch(error){
+            console.log(error);
+        }
+        navigate("ViewPuzzleScreen");
+      }}>
           <View style={{flexDirection: "row"}}>
             <Text>{puzzle.title}</Text>
             <Text>{puzzle.distance} miles</Text>
@@ -110,6 +120,8 @@ export default myapp = StackNavigator({
   PuzzleList: {screen: PuzzleListScreen },
   CreatePuzz: {screen: CreatePuzzleScreen},
   CreatePost: {screen: CreatePostScreen},
+  ViewPuzzleScreen: {screen: ViewPuzzleScreen},
+
 });
 
 const styles = StyleSheet.create({

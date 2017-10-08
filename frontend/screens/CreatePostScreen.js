@@ -17,13 +17,17 @@ import {
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
-import { Camera, Permissions } from 'expo';
+import { Camera, Permissions, ImagePicker } from 'expo';
+import { RNS3 } from 'react-native-aws3';
 export default class CreatePostScreen extends React.Component {
 
   constructor(props) {
     super(props);
   }
-
+  static navigationOptions = {
+    title: 'CreateAccount',
+    header: null
+  };
    render() {
      return(
        //title
@@ -53,18 +57,27 @@ export default class CreatePostScreen extends React.Component {
              numberOfLines={3}
              multiline={true}
            />
-<TextInput style={styles.input}
+           <TextInput style={styles.input}
              placeholder= "Number: "
              secureTextEntry
              placeholderTextColor= "rgba(0,0,0,0.7)"
              underlineColorAndroid='transparent'
-             
+
              numberOfLines={3}
              multiline={true}
            />
-           <TouchableOpacity style={styles.button} onPress={() => {
 
-           }}>
+          <TouchableOpacity style={styles.button} onPress={async () => {
+            let res = await ImagePicker.launchImageLibraryAsync({});
+            this.setState(prevState => {
+              return {
+                uri: res.uri
+              }
+            })
+          }}>
+          </TouchableOpacity>
+
+           <TouchableOpacity style={styles.button} >
              <Text>
              Upload Post
              </Text>
