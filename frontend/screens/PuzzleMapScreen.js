@@ -72,24 +72,24 @@ class PuzzleMapScreen extends React.Component {
     Location.watchPositionAsync({
       enableHighAccuracy: true,
       timeInterval: 1000,
-      distanceInterval: 5
     }, location => {
       location.coords.latitudeDelta = 0.02;
       location.coords.longitudeDelta = 0.02;
-      this.setState({location})
+      this.setState({location});
     });
   };
 
   render() {
+    this._getLocationAsync();
     const { navigate } = this.props.navigation;
     return(
       <View style={styles.container}>
-        <Text style={styles.topText}>Location of Next Clue</Text>
+        <Text style={styles.topText}>Locations of Nearest Puzzles</Text>
 
         <MapView
           style={styles.map}
-          region={this.state.location.coords}
-          onRegionChange={this.onRegionChange}>
+          region={this.state.location.coords}>
+          <MapView.Marker title="hello" description="this is the desc" coordinate={this.state.location.coords} />
         </MapView>
 
         <View style={styles.buttonView}>
