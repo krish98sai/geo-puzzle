@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { ExpoLinksView } from '@expo/samples';
 import {
   AppRegistry,
   Text,
@@ -16,22 +14,18 @@ import {
   Alert,
   AsyncStorage
 } from 'react-native';
-export default class LinksScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      confirm_password: ''
-    }
-  }
 
+import { StackNavigator } from 'react-navigation';
+import { Camera, Permissions } from 'expo';
+class PuzzleListScreen extends React.Component {
   static navigationOptions = {
-    title: 'CreateAccount',
+    title: 'Nearby Puzzle List',
     header: null
   };
-
+  state = {
+    password: "",
+    username: ""
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -48,6 +42,9 @@ export default class LinksScreen extends React.Component {
           title="CreateAccount"
         />
       </View>*/
+
+
+
       <View style={styles.container}>
         <View style={styles.logoBox}>
           <Image
@@ -55,46 +52,25 @@ export default class LinksScreen extends React.Component {
           source={require('../resource/images/Logo.png')}
           />
         </View>
-        <KeyboardAvoidingView behavior="padding" style={styles.loginstuff}>
-
+        <KeyboardAvoidingView behavior="padding"  style={styles.loginstuff}>
           <TextInput style={styles.input}
-            placeholder= "name"
+            placeholder= "username"
             placeholderTextColor= "rgba(0,0,0,0.7)"
             returnKeyType ="next"
-            keyboardType= "default"
             underlineColorAndroid='transparent'
-            onSubmitEditing={() => this.emailInput.focus()}
-            onChangeText={(name) => {this.setState({name})}}
-          />
-
-          <TextInput style={styles.input}
-            placeholder= "email address"
-            placeholderTextColor= "rgba(0,0,0,0.7)"
-            returnKeyType ="next"
             keyboardType= "email-address"
-            underlineColorAndroid='transparent'
             onSubmitEditing={() => this.passwordInput.focus()}
-            ref={(input) => this.emailInput = input}
-            onChangeText={(email) => {this.setState({email})}}
+            ref={(input) => {this.state.username = input}}
           />
 
           <TextInput style={styles.input}
             placeholder= "password"
             secureTextEntry
             placeholderTextColor= "rgba(0,0,0,0.7)"
-            underlineColorAndroid='transparent'
-            onSubmitEditing={() => this.CpasswordInput.focus()}
-            ref={(input) => this.passwordInput = input}
-            onChangeText={(password) => {this.setState({password})}}
-          />
-          <TextInput style={styles.input}
-            placeholder= "Confirm password"
-            secureTextEntry
-            underlineColorAndroid='transparent'
-            placeholderTextColor= "rgba(0,0,0,0.7)"
             returnKeyType ="go"
-            ref={(input) => this.CpasswordInput = input}
-            onChangeText={(confirm_password) => {this.setState({confirm_password})}}
+            underlineColorAndroid='transparent'
+            ref={(input) => {this.state.password = input}}
+
           />
           <TouchableOpacity style={styles.button} onPress= {async() => {
             var json_str = JSON.stringify({
@@ -124,7 +100,7 @@ export default class LinksScreen extends React.Component {
                   })*/
           }}>
             <Text>
-            CreateAccount
+            LOGIN
             </Text>
           </TouchableOpacity>
 
@@ -136,7 +112,22 @@ export default class LinksScreen extends React.Component {
   }
 }
 
+export default myapp = StackNavigator({
+  PuzzleList: {screen: PuzzleListScreen },
+});
+
 const styles = StyleSheet.create({
+
+  /*buttoner: {
+    color:"black",
+    width: 50,
+    backgroundColor:"white",
+  },
+  background: {
+    flex:1,
+    backgroundColor:'#66b8D3',
+  },*/
+
   container: {
     flex: 1,
     backgroundColor:'#3498db',
@@ -169,12 +160,12 @@ const styles = StyleSheet.create({
     color: '#000',
     paddingHorizontal: 20,
     borderRadius: 5,
-
-
   },
   button:{
     alignItems: 'center',
     backgroundColor: '#2980b9',
     paddingVertical: 10,
   }
+
+
 });

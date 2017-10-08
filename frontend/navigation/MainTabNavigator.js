@@ -6,17 +6,24 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import CreateAccountScreen from '../screens/CreateAccountScreen';
+import PuzzleListScreen from '../screens/PuzzleListScreen';
+import PuzzleMapScreen from '../screens/PuzzleMapScreen';
 
 export default TabNavigator(
   {
     Home: {
       screen: HomeScreen,
     },
-    Links: {
-      screen: LinksScreen,
-    }
-
+    CreateAccount: {
+      screen: CreateAccountScreen,
+    },
+    PuzzleList: {
+      screen: PuzzleListScreen,
+    },
+    PuzzleMap: {
+        screen: PuzzleMapScreen,
+    },
   },
   {
     navigationOptions: ({ navigation }) => ({

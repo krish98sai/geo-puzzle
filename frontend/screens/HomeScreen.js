@@ -13,11 +13,12 @@ import {
   Image,
   Alert
 } from 'react-native';
+
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions } from 'expo';
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Loggin',
+    title: 'Login',
     header: null
   };
   state = {
@@ -27,21 +28,6 @@ class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-    /*  <View style={[styles.background]}>
-        <Text style = {{
-          color:'black'
-
-        }}>Hello, Chat App!</Text>
-        <Button
-          color="#66C8f3"
-          backgroundColor="#6688ff"
-
-          onPress={() => navigate('CreateAcct')}
-          title="CreateAccount"
-        />
-      </View>*/
-
-
 
       <View style={styles.container}>
         <View style={styles.logoBox}>
@@ -84,70 +70,8 @@ class HomeScreen extends React.Component {
   }
 }
 
-class CreateAccount extends React.Component {
-
-  static navigationOptions = {
-    title: 'CreateAccount',
-    header: null
-  };
-  state = {
-    hasCameraPermission: null,
-    type: Camera.Constants.Type.back,
-  };
-
-  async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === 'granted' });
-  }
-
-  render() {
-    const { hasCameraPermission } = this.state;
-    if (hasCameraPermission === null) {
-      return <View style={{ flex: 1,
-         backgroundColor:"#FFF"
-
-      }}/>;
-    } else if (hasCameraPermission === false) {
-      return <Text>No access to camera</Text>;
-    } else {
-      return (
-        <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} ratio="16:9" type={this.state.type}>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-                flexDirection: 'row',
-              }}>
-              <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  this.setState({
-                    type: this.state.type === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back,
-                  });
-                }}>
-                <Text
-                  style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                  {' '}Flip{' '}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </Camera>
-        </View>
-      );
-    }
-  }
-}
-
 export default myapp = StackNavigator({
   Home: { screen: HomeScreen },
-  CreateAcct: { screen: CreateAccount },
 });
 
 
