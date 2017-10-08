@@ -17,8 +17,8 @@ import {
 
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions, Video } from 'expo';
-class ViewPostScreen extends React.Component {
 
+class ViewPostScreen extends React.Component {
   static navigationOptions = {
     title: 'ViewPosts',
   }
@@ -28,8 +28,6 @@ class ViewPostScreen extends React.Component {
     this.onPressButton = this.onPressButton.bind(this);
   }
   onPressButton(){
-    this.vid.presentFullscreenPlayer();
-    this.vid.seek(5);
   }
 
   render() {
@@ -38,19 +36,22 @@ class ViewPostScreen extends React.Component {
    return (
      <View style={styles.container}>
        <TouchableHighlight onPress={this.onPressButton}>
-       <Text style={{color: 'yellow'}}>Full Screen</Text>
+       <View>
+        <Video
+          ref={r=>this.vid = r}
+          source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+          rate={1.0}
+          volume={1.0}
+          muted={false}
+          useNativeControls ={true}
+          resizeMode="cover"
+          repeat
+          style={{ width: 300, height: 300 }}
+         />
+        </View>
 
        </TouchableHighlight>
-       <Video
-         ref={r=>this.vid = r}
-         source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-         rate={1.0}
-         volume={1.0}
-         muted={false}
-         resizeMode="cover"
-         repeat
-         style={{ width: 300, height: 300 }}
-       />
+
      </View>
    );
  }
