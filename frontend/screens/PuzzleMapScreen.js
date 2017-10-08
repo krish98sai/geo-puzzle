@@ -16,9 +16,9 @@ import {
 
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions } from 'expo';
-class HomeScreen extends React.Component {
+class PuzzleMapScreen extends React.Component {
   static navigationOptions = {
-    title: 'Login',
+    title: 'Nearby Puzzle Map',
     header: null
   };
   state = {
@@ -28,6 +28,21 @@ class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
+    /*  <View style={[styles.background]}>
+        <Text style = {{
+          color:'black'
+
+        }}>Hello, Chat App!</Text>
+        <Button
+          color="#66C8f3"
+          backgroundColor="#6688ff"
+
+          onPress={() => navigate('CreateAcct')}
+          title="CreateAccount"
+        />
+      </View>*/
+
+
 
       <View style={styles.container}>
         <View style={styles.logoBox}>
@@ -71,10 +86,8 @@ class HomeScreen extends React.Component {
 }
 
 export default myapp = StackNavigator({
-  Home: { screen: HomeScreen },
+  PuzzleMap: {screen: PuzzleMapScreen },
 });
-
-
 
 const styles = StyleSheet.create({
 
