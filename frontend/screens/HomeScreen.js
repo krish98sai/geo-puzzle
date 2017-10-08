@@ -11,25 +11,19 @@ import {
   TouchableOpacity,
   Keyboard,
   Image,
-  Alert,
-  AsyncStorage
+  Alert
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions } from 'expo';
-import CreatePuzzleScreen from './CreatePuzzle'
 class HomeScreen extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    }
-  }
   static navigationOptions = {
     title: 'Loggin',
     header: null
   };
-
+  state = {
+    password: "",
+    username: ""
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -58,16 +52,13 @@ class HomeScreen extends React.Component {
         </View>
         <KeyboardAvoidingView behavior="padding"  style={styles.loginstuff}>
           <TextInput style={styles.input}
-            placeholder= "email"
+            placeholder= "username"
             placeholderTextColor= "rgba(0,0,0,0.7)"
             returnKeyType ="next"
             underlineColorAndroid='transparent'
             keyboardType= "email-address"
             onSubmitEditing={() => this.passwordInput.focus()}
-            //ref={(input) => {this.state.username = input}}
-            onChangeText = {(email) => {
-              this.setState({email});
-            }}
+            ref={(input) => {this.state.username = input}}
           />
 
           <TextInput style={styles.input}
@@ -76,40 +67,10 @@ class HomeScreen extends React.Component {
             placeholderTextColor= "rgba(0,0,0,0.7)"
             returnKeyType ="go"
             underlineColorAndroid='transparent'
-            //ref={(input) => {this.state.password = input}}
-            onChangeText = {(password) => {
-              this.setState({password});
-            }}
+            ref={(input) => {this.state.password = input}}
+
           />
-          <TouchableOpacity style={styles.button} onPress={() => {
-            var loginjson = JSON.stringify({
-              user: {
-                email: this.state.email,
-                password: this.state.password
-              }
-            })
-            fetch('http://geo-puzzle.herokuapp.com/users/sign_in', {
-              method: 'POST',
-              headers:{
-                'Accept':'application/json',
-                'Content-Type': 'application/json'
-              },
-              body : loginjson
-            }).then(async(response) => {
-              var arr = Object.keys(response);
-              var str = '';
-              for (var i = 0; i < arr.length; i++) {
-                str += arr[i] + " "
-              }
-              try{
-                await AsyncStorage.setItem('auth_token', JSON.parse(response._bodyText).token);
-              }catch(error){
-
-              }
-
-            })
-            navigate('CreatePuz');}
-          }>
+          <TouchableOpacity style={styles.button} onPress={() => navigate("CreateAcct")}>
             <Text>
             LOGIN
             </Text>
@@ -163,7 +124,6 @@ class CreateAccount extends React.Component {
 export default myapp = StackNavigator({
   Home: { screen: HomeScreen },
   CreateAcct: { screen: CreateAccount },
-  CreatePuz: { screen: CreatePuzzleScreen},
 });
 
 
