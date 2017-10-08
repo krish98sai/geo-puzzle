@@ -5,6 +5,7 @@ respond_to :json
 
   def index
     @puzzles = Puzzle.near(params[:search], 10)
+    render json: @puzzles
   end
 
   def show
