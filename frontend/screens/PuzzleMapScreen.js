@@ -93,7 +93,7 @@ class PuzzleMapScreen extends React.Component {
         </MapView>
 
         <View style={styles.buttonView}>
-          <Button title="PRESS ME">PRESS ME</Button>
+          <Button title="PRESS ME" onPress={()=>{}}>PRESS ME</Button>
         </View>
       </View>
     );
