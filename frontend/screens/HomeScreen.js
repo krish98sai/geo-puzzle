@@ -16,6 +16,8 @@ import {
 
 import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions } from 'expo';
+import ViewPostScreen from './ViewPostScreen';
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Login',
@@ -25,10 +27,10 @@ class HomeScreen extends React.Component {
     password: "",
     username: ""
   }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
-
       <View style={styles.container}>
         <View style={styles.logoBox}>
           <Image
@@ -56,7 +58,7 @@ class HomeScreen extends React.Component {
             ref={(input) => {this.state.password = input}}
 
           />
-          <TouchableOpacity style={styles.button} onPress={() => navigate("CreateAcct")}>
+          <TouchableOpacity style={styles.button} onPress={() => navigate('ViewPost')}>
             <Text>
             LOGIN
             </Text>
@@ -70,24 +72,18 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default myapp = StackNavigator({
+  export default myapp = StackNavigator({
+    Home: { screen: HomeScreen },
+    ViewPost: { screen: ViewPostScreen},
+  });
+
+
+/*export default myapp = StackNavigator({
   Home: { screen: HomeScreen },
-});
-
-
+  ViewPost: { screen: ViewPostScreen},
+});*/
 
 const styles = StyleSheet.create({
-
-  /*buttoner: {
-    color:"black",
-    width: 50,
-    backgroundColor:"white",
-  },
-  background: {
-    flex:1,
-    backgroundColor:'#66b8D3',
-  },*/
-
   container: {
     flex: 1,
     backgroundColor:'#3498db',
@@ -126,6 +122,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#2980b9',
     paddingVertical: 10,
   }
-
-
 });
