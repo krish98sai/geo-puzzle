@@ -23,10 +23,14 @@ import { StackNavigator } from 'react-navigation';
 class PuzzleMapScreen extends React.Component {
   constructor(props) {
     super(props);
-    const ds = new MapView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
-      puzzdataSource: ds,
+      puzzles: [{
+        title: "test",
+        description: "test",
+        latitude: 0,
+        longitude: 0
+      }],
       location: {
       coords: {
         latitude: 0.0,
@@ -44,8 +48,12 @@ class PuzzleMapScreen extends React.Component {
     header: null
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    this.fetchPuzzles();
     this._getLocationAsync();
+  }
+
+  componentDidMount() {
   }
 
   getInitialState() {
@@ -73,17 +81,36 @@ class PuzzleMapScreen extends React.Component {
 
     Location.watchPositionAsync({
       enableHighAccuracy: true,
-      timeInterval: 1000,
+      timeInterval: 5000,
     }, location => {
-      location.coords.latitudeDelta = 0.02;
-      location.coords.longitudeDelta = 0.02;
+      location.coords.latitudeDelta = 0.09;
+      location.coords.longitudeDelta = 0.09;
       this.setState({location});
+      //this.fetchPuzzles();
     });
   };
+
+  fetchPuzzles(){
+    var url = 'http://geo-puzzle.herokuapp.com/puzzle/index?search=' + this.state.location.coords.latitude + ',' + this.state.location.coords.longitude;
+    console.log(url);
+    fetch(url)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          puzzles: response,
+        });
+      });
+    }
 
   render() {
     this._getLocationAsync();
     const { navigate } = this.props.navigation;
+//    console.log(this.state.puzzles.keys());
+    const arr = this.state.puzzles.map((marker) => (
+      <MapView.Marker coordinate={marker} title={marker.title} description={marker.description}/>
+    ));
+    this.fetchPuzzles();
     return(
       <View style={styles.container}>
         <Text style={styles.topText}>Locations of Nearest Puzzles</Text>
@@ -91,7 +118,9 @@ class PuzzleMapScreen extends React.Component {
         <MapView
           style={styles.map}
           region={this.state.location.coords}>
-          <MapView.Marker title="hello" description="this is the desc" coordinate={this.state.location.coords} />
+          {this.state.puzzles.map(marker => (
+            <MapView.Marker coordinate={marker} title={marker.title} description={marker.description}/>
+          ))}
         </MapView>
 
         <View style={styles.buttonView}>
