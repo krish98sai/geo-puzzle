@@ -4,7 +4,7 @@ skip_before_action :verify_authenticity_token, :if => lambda{ request.headers["A
 respond_to :json
 
   def index
-    @puzzles = Puzzle.all
+    @puzzles = Puzzle.near(params[:search], 10)
   end
 
   def show
