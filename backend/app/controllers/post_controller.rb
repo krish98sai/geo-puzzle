@@ -5,6 +5,7 @@ class PostController < ApplicationController
 
   def index
     @posts = Post.all
+    render json: @posts
   end
 
   def show
