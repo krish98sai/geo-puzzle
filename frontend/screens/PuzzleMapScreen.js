@@ -23,8 +23,10 @@ import { StackNavigator } from 'react-navigation';
 class PuzzleMapScreen extends React.Component {
   constructor(props) {
     super(props);
+    const ds = new MapView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
+      puzzdataSource: ds,
       location: {
       coords: {
         latitude: 0.0,
