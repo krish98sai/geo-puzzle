@@ -11,74 +11,105 @@ import {
   TouchableOpacity,
   Keyboard,
   Image,
-  Alert
+  Alert,
+  AsyncStorage,
+  ScrollView,
+  ListView
 } from 'react-native';
-
+import CreatePuzzleScreen from './CreatePuzzleScreen';
+import CreatePostScreen from './CreatePostScreen';
+import ViewPuzzleScreen from './ViewPuzzleScreen';
 import { StackNavigator } from 'react-navigation';
-import { Camera, Permissions } from 'expo';
+import { Camera, Permissions, Location } from 'expo';
 class PuzzleListScreen extends React.Component {
   static navigationOptions = {
     title: 'Nearby Puzzle List',
     header: null
   };
-  state = {
-    password: "",
-    username: ""
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      puzzdataSource: ds,
+      location: {
+        coords: {
+          latitude:0,
+          longitude:0,
+        }
+      },
+    };
+  }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    Location.watchPositionAsync({
+      enableHighAccuracy: true,
+      timeInterval: 1000,
+      distanceInterval: 5
+    }, location => {
+      location.coords.latitudeDelta = 0.02;
+      location.coords.longitudeDelta = 0.02;
+      this.setState({location});
+      this.fetchPuzzles();
+    });
+  };
+
+  fetchPuzzles(){
+    var url = 'http://geo-puzzle.herokuapp.com/puzzle/index?search=' + this.state.location.coords.latitude + ',' + this.state.location.coords.longitude;
+    console.log(url);
+    fetch(url)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          puzzdataSource: this.state.puzzdataSource.cloneWithRows(response)
+        });
+      });
+    }
+
+
+  renderRow(puzzle, sectionId, rowId, highlightRow){
+    const { navigate } = this.props.navigation;
+    return(
+      <TouchableOpacity style={styles.container} onPress={async()=>{
+        try{
+            await AsyncStorage.setItem('id', puzzle.id + '');
+            console.log("Any string");
+        }catch(error){
+            console.log(error);
+        }
+        navigate("ViewPuzzleScreen");
+      }}>
+          <View style={{flexDirection: "row"}}>
+            <Text>{puzzle.title}</Text>
+            <Text>{puzzle.distance} miles</Text>
+          </View>
+      </TouchableOpacity>
+    );
   }
   render() {
     const { navigate } = this.props.navigation;
     return (
-    /*  <View style={[styles.background]}>
-        <Text style = {{
-          color:'black'
-
-        }}>Hello, Chat App!</Text>
-        <Button
-          color="#66C8f3"
-          backgroundColor="#6688ff"
-
-          onPress={() => navigate('CreateAcct')}
-          title="CreateAccount"
-        />
-      </View>*/
-
-
 
       <View style={styles.container}>
-        <View style={styles.logoBox}>
-          <Image
-          style={styles.logo}
-          source={require('../resource/images/Logo.png')}
-          />
-        </View>
-        <KeyboardAvoidingView behavior="padding"  style={styles.loginstuff}>
-          <TextInput style={styles.input}
-            placeholder= "username"
-            placeholderTextColor= "rgba(0,0,0,0.7)"
-            returnKeyType ="next"
-            underlineColorAndroid='transparent'
-            keyboardType= "email-address"
-            onSubmitEditing={() => this.passwordInput.focus()}
-            ref={(input) => {this.state.username = input}}
-          />
 
-          <TextInput style={styles.input}
-            placeholder= "password"
-            secureTextEntry
-            placeholderTextColor= "rgba(0,0,0,0.7)"
-            returnKeyType ="go"
-            underlineColorAndroid='transparent'
-            ref={(input) => {this.state.password = input}}
-
-          />
-          <TouchableOpacity style={styles.button} onPress={() => navigate("CreateAcct")}>
-            <Text>
-            LOGIN
-            </Text>
-          </TouchableOpacity>
-
-        </KeyboardAvoidingView>
-
+        <TouchableOpacity style={styles.button} onPress={() => { this._getLocationAsync();  }}>
+          <Text>Refresh Location</Text>
+        </TouchableOpacity>
+        <ScrollView>
+          <ListView
+            dataSource={this.state.puzzdataSource}
+            renderRow={this.renderRow.bind(this)}/>
+        </ScrollView>
+        <TouchableOpacity style={styles.button} onPress={() => navigate('CreatePuzz')}>
+          <Text>make puzzle</Text>
+        </TouchableOpacity>
       </View>
 
     );
@@ -87,6 +118,10 @@ class PuzzleListScreen extends React.Component {
 
 export default myapp = StackNavigator({
   PuzzleList: {screen: PuzzleListScreen },
+  CreatePuzz: {screen: CreatePuzzleScreen},
+  CreatePost: {screen: CreatePostScreen},
+  ViewPuzzleScreen: {screen: ViewPuzzleScreen},
+
 });
 
 const styles = StyleSheet.create({

@@ -14,7 +14,7 @@ import {
   ScrollView
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import CreatePostScreen from './CreatePostScreen'
+
 export default class CreatePuzzleScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -82,26 +82,26 @@ export default class CreatePuzzleScreen extends React.Component {
         </View>
 
           <ScrollView>
-            <TouchableOpacity style={styles.button} onPress={() => navigate('CreatePost')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigate('CreateAcct')}>
               <Text>
               Clue 1
               </Text>
             </TouchableOpacity>
             <View style={styles.spacer}><Text sytle={styles.title}> </Text></View>
-            <TouchableOpacity style={styles.button} onPress={() => navigate('CreatePost')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigate('CreateAcct')}>
               <Text>
               Clue 2
               </Text>
             </TouchableOpacity>
             <View style={styles.spacer}><Text sytle={styles.title}> </Text></View>
-            <TouchableOpacity style={styles.button} onPress={() => navigate('CreatePost')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigate('CreateAcct')}>
               <Text>
               Clue 3
               </Text>
             </TouchableOpacity>
           </ScrollView>
 
-          <TouchableOpacity style={styles.button} onPress={() => navigate('')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigate('CreateAcct')}>
             <Text>
             Create Puzzle
             </Text>
@@ -112,9 +112,10 @@ export default class CreatePuzzleScreen extends React.Component {
       );
   }
 }
-myapp = StackNavigator({
-  CreatePost: {screen: CreatePostScreen},
-});
+
+
+
+
 const styles = StyleSheet.create({
 
   /*buttoner: {
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2980b9',
     paddingVertical: 10,
-
+    
   }
 
 

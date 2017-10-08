@@ -58,7 +58,7 @@ class HomeScreen extends React.Component {
             ref={(input) => {this.state.password = input}}
 
           />
-          <TouchableOpacity style={styles.button} onPress={() => navigate('ViewPost')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigate("CreateAccount")}>
             <Text>
             LOGIN
             </Text>

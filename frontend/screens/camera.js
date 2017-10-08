@@ -22,7 +22,7 @@ export default class CameraExample extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} type={this.state.type}>
+          <Camera style={{ flex: 1, ratio:"16:9" }} type={this.state.type}>
             <View
               style={{
                 flex: 1,
