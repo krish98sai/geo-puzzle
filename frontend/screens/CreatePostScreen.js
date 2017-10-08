@@ -20,7 +20,7 @@ import { StackNavigator } from 'react-navigation';
 import { Camera, Permissions } from 'expo';
 export default class CreatePostScreen extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super(props);
   }
 
@@ -41,7 +41,7 @@ export default class CreatePostScreen extends React.Component {
              underlineColorAndroid='transparent'
              keyboardType= "default"
              onSubmitEditing={() => this.passwordInput.focus()}
-             ref={(input) => {this.state.username = input}}
+
            />
 
            <TextInput style={styles.input}
@@ -49,7 +49,7 @@ export default class CreatePostScreen extends React.Component {
              secureTextEntry
              placeholderTextColor= "rgba(0,0,0,0.7)"
              underlineColorAndroid='transparent'
-             ref={(input) => {this.state.password = input}}
+
              numberOfLines={3}
              multiline={true}
            />
@@ -58,7 +58,7 @@ export default class CreatePostScreen extends React.Component {
              secureTextEntry
              placeholderTextColor= "rgba(0,0,0,0.7)"
              underlineColorAndroid='transparent'
-             ref={(input) => {this.state.password = input}}
+             
              numberOfLines={3}
              multiline={true}
            />
